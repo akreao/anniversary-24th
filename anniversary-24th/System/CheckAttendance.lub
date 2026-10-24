@@ -1,0 +1,43 @@
+-- 24th Anniversary: Attendance Check rewards for the client's window.
+-- Must match db/when/client_attendance/attendance.yml; both are written by
+-- anniversary24/tools/gen.py. Replaces the client's own copy.
+Config = {
+	EvendOnOff = 1,
+	StartDate = 20260805,
+	EndDate = 20991231
+}
+Reward = {
+	{ 1, 107614, 1 }, -- 24th_Attendance_1
+	{ 2, 107616, 1 }, -- 24th_Attendance_2
+	{ 3, 107617, 1 }, -- 24th_Attendance_3
+	{ 4, 107618, 1 }, -- 24th_Attendance_4
+	{ 5, 107619, 1 }, -- 24th_Attendance_5
+	{ 6, 107620, 1 }, -- 24th_Attendance_6
+	{ 7, 107621, 1 }, -- 24th_Attendance_7
+	{ 8, 107622, 1 }, -- 24th_Attendance_8
+	{ 9, 107623, 1 }, -- 24th_Attendance_9
+	{ 10, 107624, 1 }, -- 24th_Attendance_10
+	{ 11, 107625, 1 }, -- 24th_Attendance_11
+	{ 12, 107626, 1 }, -- 24th_Attendance_12
+	{ 13, 107627, 1 }, -- 24th_Attendance_13
+	{ 14, 107628, 1 }, -- 24th_Attendance_14
+	{ 15, 107629, 1 }, -- 24th_Attendance_15
+	{ 16, 107630, 1 }, -- 24th_Attendance_16
+	{ 17, 107631, 1 }, -- 24th_Attendance_17
+	{ 18, 107632, 1 }, -- 24th_Attendance_18
+	{ 19, 107633, 1 }, -- 24th_Attendance_19
+	{ 20, 107634, 1 }, -- 24th_Attendance_20
+}
+function main()
+	result, msg = InsertCheckAttendanceConfig(Config.EvendOnOff, Config.StartDate, Config.EndDate)
+	if not result then
+		return false, msg
+	end
+	for k, rewardtbl in pairs(Reward) do
+		result, msg = InsertCheckAttendanceReward(rewardtbl[1], rewardtbl[2], rewardtbl[3])
+		if not result then
+			return false, msg
+		end
+	end
+	return true, "good"
+end

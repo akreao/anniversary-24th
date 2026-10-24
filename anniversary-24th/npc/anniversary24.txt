@@ -1,0 +1,122 @@
+//===== rAthena Script =======================================
+//= 24th Anniversary: attendance, gift box and coin exchange
+//===== Description: =========================================
+//= Part of the Ragnarok Offline mod "anniversary-24th".
+//=
+//=  prontera 156,282   24th Anniversary Coin Exchanger, the spot
+//=                     kRO's coin text links to
+//=
+//= kRO (2026-08-05 to 2026-09-01) gave one attendance box a day
+//= through its login attendance window, 20 boxes in all, and a
+//= 24th Anniversary Gift Box to every account that logged in. This
+//= mod has no end date and hands both out from the Exchanger
+//= instead [deviation]: one box a day per account, Day 1 to Day 20
+//= in order, and one gift box per account. With the setting
+//= client_attendance on, the boxes come from the Attendance Check
+//= window instead, as on kRO, and the Exchanger only gives the gift
+//= box.
+//============================================================
+
+// Pick-one box: F_A24_Pick(<box id>, <item id>...). The box is
+// DelayConsume, so it is deleted here, only once the player has
+// picked. Call it from an NPC event, not straight from the item
+// script: the server frees an item script's state as soon as it
+// returns, so a menu shown there never gets the player's answer.
+function	script	F_A24_Pick	{
+	.@box = getarg(0);
+	.@n = getargcount() - 1;
+	for (.@i = 0; .@i < .@n; .@i++) {
+		.@item[.@i] = getarg(1 + .@i);
+		.@menu$ += getitemname(.@item[.@i]) + ":";
+	}
+	.@menu$ += "Cancel";
+	mes "[" + getitemname(.@box) + "]";
+	mes "Choose one.";
+	.@s = select(.@menu$) - 1;
+	if (.@s >= .@n)
+		close;
+	if (countitem(.@box) < 1)
+		close;
+	if (!checkweight(.@item[.@s], 1)) {
+		mes "You're carrying too much.";
+		close;
+	}
+	delitem .@box, 1;
+	getitem .@item[.@s], 1;
+	close;
+}
+
+// Costume Himmelmez's Wig Selection Box (106849): its item script
+// runs OnPick with addtimer, so the menu is an NPC dialog.
+-	script	A24_WigBox	-1,{
+	end;
+OnPick:
+	callfunc "F_A24_Pick", 106849, 31874, 31875, 31876, 31877, 31878, 31879, 31880, 31881;
+	end;
+}
+
+prontera,156,282,4	script	24th Anniversary Coin Exchanger#a24	4_F_ANNIVERSARY,{
+	// [unverified: the NPC's sprite; kRO's NPC table no longer lists it]
+	.@today = gettime(DT_YYYYMMDD);
+	mes "[Coin Exchanger]";
+	mes "Happy 24th anniversary, Ragnarok Online!";
+	mes "Come by every day for your attendance box. Each box holds a gift and 24th Anniversary Coins.";
+	next;
+	switch (select("Today's attendance box", "24th Anniversary Gift Box", "Exchange coins", "Cancel")) {
+	case 1:
+		mes "[Coin Exchanger]";
+		// Setting client_attendance: the game's Attendance Check window
+		// hands the boxes out instead (db/when/client_attendance/).
+		if (callfunc("F_ModSetting", "anniversary-24th", "client_attendance", 0)) {
+			mes "This year the attendance boxes come through the ^0000FFAttendance Check^000000 window, one a day by mail.";
+			close;
+		}
+		if (#A24_DAYS >= 20) {
+			mes "You've collected all 20 attendance boxes. Thank you for celebrating with us!";
+			close;
+		}
+		if (#A24_LAST == .@today) {
+			mes "You've already taken today's box (Day " + #A24_DAYS + ").";
+			mes "Come back tomorrow for Day " + (#A24_DAYS + 1) + ".";
+			close;
+		}
+		.@box = .boxes[#A24_DAYS];
+		if (!checkweight(.@box, 1)) {
+			mes "You're carrying too much.";
+			close;
+		}
+		#A24_DAYS += 1;
+		#A24_LAST = .@today;
+		getitem .@box, 1;
+		mes "Here's your " + getitemname(.@box) + ".";
+		mes "Attendance: " + #A24_DAYS + " of 20 days.";
+		close;
+	case 2:
+		mes "[Coin Exchanger]";
+		if (#A24_GIFT) {
+			mes "Your account has already received its gift box.";
+			close;
+		}
+		if (!checkweight(103314, 1)) {
+			mes "You're carrying too much.";
+			close;
+		}
+		#A24_GIFT = 1;
+		getitem 103314, 1;
+		mes "Here's your 24th Anniversary Gift Box, one per account.";
+		close;
+	case 3:
+		mes "[Coin Exchanger]";
+		mes "Pick what you'd like. Prices are in 24th Anniversary Coins.";
+		close2;
+		// The trades and prices are in db/barters.yml.
+		callshop "a24_coin_exchange", 1;
+		end;
+	}
+	close;
+
+OnInit:
+	// Day 1 to Day 20. kRO skips 107615.
+	setarray .boxes[0], 107614, 107616, 107617, 107618, 107619, 107620, 107621, 107622, 107623, 107624, 107625, 107626, 107627, 107628, 107629, 107630, 107631, 107632, 107633, 107634;
+	end;
+}

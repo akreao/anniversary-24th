@@ -1,0 +1,19 @@
+{
+  "name": "anniversary-24th",
+  "version": "0.1.0",
+  "author": "akreao",
+  "description": "kRO's 24th anniversary event (2026): the 24th Anniversary Coin Exchanger in Prontera hands out the 20 daily Attendance Boxes and the 24th Anniversary Gift Box, with the 24th Anniversary Coin, the All in One Potion and the World Tour Ticket Envelope.",
+  "requires": {
+    "app": ">=1.7.0",
+    "era": "renewal"
+  },
+  "settings": [
+    {
+      "key": "client_attendance",
+      "type": "boolean",
+      "default": false,
+      "label": "Use the Attendance Check window",
+      "description": "Hand out the 20 attendance boxes through the game's own Attendance Check window, one a day by mail, as kRO did. Off = the Coin Exchanger in Prontera hands them out. Don't switch it on together with standart-npc's Attendance Check: only one attendance can run at a time."
+    }
+  ]
+}
