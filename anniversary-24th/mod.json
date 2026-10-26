@@ -1,10 +1,10 @@
 {
   "name": "anniversary-24th",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "akreao",
   "description": "kRO's 24th anniversary event (2026): the 24th Anniversary Coin Exchanger in Prontera hands out the 20 daily Attendance Boxes and the 24th Anniversary Gift Box, with the 24th Anniversary Coin, the All in One Potion and the World Tour Ticket Envelope.",
   "requires": {
-    "app": ">=1.7.0",
+    "app": ">=1.7.2",
     "era": "renewal"
   },
   "settings": [

@@ -4,6 +4,11 @@ Each `## <version>` section is that version's release notes: the release
 workflow publishes it as the GitHub Release text, which the Ragnarok Offline
 app shows players under "What's new". Write it for players.
 
+## 0.1.1
+- The Costume Himmelmez's Wig Selection Box now opens the game's selection
+  window, like the Booster costume boxes: pick a wig colour and confirm.
+  Needs app 1.7.2 or later.
+
 ## 0.1.0
 - First release: kRO's 24th anniversary event. Visit the 24th Anniversary
   Coin Exchanger in Prontera (156, 282) once a day for your Attendance Box,

@@ -10,7 +10,7 @@ kRO's 24th anniversary items (2026) for Ragnarok Offline. Renewal only. Sources:
 | 107614, 107616–107634 | 24th Anniversary Attendance Box - Day 1 to Day 20 | New. kRO skips 107615. Each holds one gift plus 1–6 coins (45 coins over 20 days). |
 | 107609 | World Tour Ticket Envelope | New. 5 World Tour Tickets (25464); the Day 2 and Day 7 boxes hold 3. |
 | 107611 | Infinity All Booster Box | New. 5 each of Infinity Drink, Almighty and Power Booster. From the Exchanger. |
-| 106849 | Costume Himmelmez's Wig Selection Box | New. Pick one of the 8 wig colours. From the Exchanger. |
+| 106849 | Costume Himmelmez's Wig Selection Box | New. Pick one of the 8 wig colours in the game's selection window. From the Exchanger. |
 | 100906 | [Not For Sale] 24th Anniversary All in One Potion | Stock rAthena item (its 21st anniversary name), renamed. Script set to the effects kRO's and iRO's text list. |
 | 103314 | 24th Anniversary Gift Box | Stock rAthena item (its 22nd anniversary name), renamed. Contents unchanged: 3 potions and a Kafra Buff (7 Days). |
 
@@ -21,10 +21,12 @@ kRO's 24th anniversary items (2026) for Ragnarok Offline. Renewal only. Sources:
 | `db/item_db.yml` | The new items, and the renames and potion script for 100906 and 103314. |
 | `db/item_group_db.yml` | What each attendance box holds (`IG_24TH_ATTENDANCE_1` to `_20`) and the Infinity All Booster Box. |
 | `db/const.yml` | The `IG_` constants for those groups (24001–24021). rAthena only accepts a group whose constant exists. |
+| `db/item_packages.yml` | The wig box's eight choices, one wig each, for the game's selection window. |
 | `db/barters.yml` | The Coin Exchanger's trades, as a barter shop priced in coins. |
 | `npc/anniversary24.txt` | The 24th Anniversary Coin Exchanger at prontera 156,282, where kRO's coin text points: today's attendance box, the gift box, and the coin exchange. |
 | `db/when/client_attendance/attendance.yml` | Loaded only with the setting `client_attendance` on: the 20 boxes as the game's Attendance Check, one a day by mail. |
 | `System/CheckAttendance.lub` | The Attendance Check window's reward list, matching the table above. |
+| `data/luafiles514/lua files/selectpackage/selectpackageitem.lua` | The wig box's choices as the selection window shows them. The app adds it to the client's own table (app 1.7.2 or later). |
 | `System/itemInfo.lua` | English names and descriptions for the new and renamed items, plus the two 24-coin costumes, which the app's English item table lacks. |
 
 ## Setting
@@ -65,5 +67,5 @@ Values with one source are marked `[unverified]` where they're used.
 
 1. Talk to the Coin Exchanger at prontera 156,282 and take today's box. Open it: you get the gift and the coins. Talking again says to come back tomorrow.
 2. Take the gift box, open it, and drink a potion: life potions, defense scroll, Almighty, Infinity Drink, Tyr's Blessing, Power Booster, mana potion and movement speed for an hour.
-3. Exchange coins (`@item 1003076 45`): the shop lists 11 trades. Buy the 40-coin box and open it: it asks which wig colour.
+3. Exchange coins (`@item 1003076 45`): the shop lists 11 trades. Buy the 40-coin box and open it: the selection window lists the eight wigs. Pick one and confirm: you get that wig and the box is used.
 4. Hover the new items: English names and text, with icons.

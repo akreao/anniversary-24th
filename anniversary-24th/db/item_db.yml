@@ -67,10 +67,12 @@ Body:
     Script: |
       getgroupitem(IG_INFINITYALLBOOSTER_BOX);
   # Costume Himmelmez's Wig Selection Box (Coin Exchanger, 40 coins): pick
-  # one of the eight colours. AegisName from divine-pride. DelayConsume, so
-  # the box goes only once a colour is picked. The server ends an item
-  # script as soon as it returns, so a menu can't wait in one: the script
-  # starts the menu as an NPC event instead (npc/anniversary24.txt).
+  # one of the eight colours. AegisName from divine-pride. A selection
+  # package (db/item_packages.yml): clients from 2022-02-16 on open their
+  # pick-one window and never run this script. Older clients run it, and
+  # it starts an NPC menu instead (npc/anniversary24.txt): DelayConsume, so
+  # the box goes only once a colour is picked, and the menu runs as an NPC
+  # event because a menu can't wait in an item script.
   - Id: 106849
     AegisName: SelecLow_Pack7_ID
     Name: Costume Himmelmez's Wig Selection Box
